@@ -58,13 +58,15 @@ class TaskBiddingSimulator:
         for agent in self.agents:
             agent.check_granted_consumption_requests(requests[agent.idx], granted[agent.idx])
 
-    def select_tasks(self):
+    def select_tasks(self, t):
         common_good_levels = {}
         for good, vals in self.common_goods.items():
             current, desired = vals
             common_good_levels[good] = current - desired
         for agent in self.agents:
-            agent.select_task(common_good_levels)
+            picked = np.random.choice(self.agents, 10)
+            picked_props = [agent.task.property for agent in picked if agent.task != None]
+            agent.select_task(common_good_levels, picked_props, t)
 
     def execute_tasks(self,t):
         for agent in self.agents:
@@ -82,10 +84,11 @@ class TaskBiddingSimulator:
 
     def simulate(self, tmax):
         for t in range(tmax):
+            self.t = t
             # consume goods as necessary
             self.consume_goods()
             # select tasks
-            self.select_tasks()
+            self.select_tasks(t)
             # execute tasks
             self.execute_tasks(t)
             # update stats & kill agents if necessary
@@ -95,4 +98,5 @@ class TaskBiddingSimulator:
                 print(f"ALL AGENTS ARE DEAD at t={t}")
                 print(", ".join(f"{good.value}:{self.common_goods[good]}" for good in self.common_goods.keys()))
                 break
+        print(", ".join([f"{prop.value}-{self.common_goods[prop]}" for prop in self.common_goods.keys()]))
         print([agent.print_summary() for agent in self.agents])

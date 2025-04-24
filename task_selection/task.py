@@ -12,18 +12,19 @@ class Task:
 
         self.start_timestep = None
 
-    def execute(self, t, skill_level):
-        if not self.start_timestep:
-            self.start_timestep = t
+    def execute(self, t, start_t, skill_level):
         complete = False
         success = False
         reward = 0
-        if t - self.start_timestep >= self.duration:
+        if t - start_t >= self.duration:
             complete = True
             skill_impact = 1/skill_level if skill_level != 0 else 0
             threshold = max(1 - skill_impact, self.min_threshold)
             r = random.random()
             if r <= threshold:
                 success = True
-            reward = self.reward
+            if success:
+                reward = self.reward
+            self.start_timestep = None
+            self.skill_level = None
         return {self.property: reward}, complete, success
