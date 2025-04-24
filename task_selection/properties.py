@@ -1,0 +1,7 @@
+from enum import Enum
+
+class Property(Enum):
+    FOOD = "food",
+    SHELTER = "shelter"
+    REST = "rest/exhaustion",
+    FACE = "face"
