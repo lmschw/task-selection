@@ -100,3 +100,4 @@ class TaskBiddingSimulator:
                 break
         print(", ".join([f"{prop.value}-{self.common_goods[prop]}" for prop in self.common_goods.keys()]))
         print([agent.print_summary() for agent in self.agents])
+        return [a.experience for a in self.agents], [a.successes for a in self.agents]
