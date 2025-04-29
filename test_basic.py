@@ -5,25 +5,40 @@ from task_selection.properties import Property
 from task_selection.simulator import TaskBiddingSimulator
 from task_selection.task import Task
 
-n_agents = 20
+n_agents = 50
 common_goods = {Property.FOOD: [100, 15],
-                Property.SHELTER: [100, 15]}
-overall_propertiees = [Property.FOOD, Property.SHELTER, Property.REST]
-crate = 0
+                Property.SHELTER: [100, 15],
+                Property.WATER: [100, 15],
+                Property.SECURITY: [100, 15],
+                Property.COMPANY: [100, 15],
+                Property.WASTE_MANAGEMENT: [100, 15]}
+overall_propertiees = [Property.FOOD, Property.SHELTER, Property.WATER, Property.SECURITY, Property.COMPANY, Property.WASTE_MANAGEMENT]
+crate = 0.1
 consumption_rates = {Property.FOOD: crate,
                      Property.SHELTER: crate,
-                     Property.REST: 0}
+                     Property.WATER: crate,
+                     Property.SECURITY: crate,
+                     Property.COMPANY: crate,
+                     Property.WASTE_MANAGEMENT: crate}
 
-reward = 20
+reward = 40
 duration = 5
 task1 = Task("collect_long", Property.FOOD, duration=duration, reward=reward)
 task2 = Task("collect_short", Property.FOOD, duration=5, reward=5)
 task3 = Task("shelter", Property.SHELTER, duration=duration, reward=reward)
-task4 = Task("rest", Property.REST, duration=duration, reward=20)
-tasks = [task1, task3]
+task4 = Task("rest", Property.REST, duration=duration, reward=50)
+task5 = Task("water", Property.WATER, duration=duration, reward=reward)
+task6 = Task("guard", Property.SECURITY, duration=duration, reward=reward)
+task7 = Task("chill", Property.COMPANY, duration=duration, reward=reward)
+task8 = Task("shovel_shit", Property.WASTE_MANAGEMENT, duration=duration, reward=reward)
+tasks = [task1, task2, task3, task5, task6, task7, task8]
 
 needs = {Property.FOOD: [15, 20],
-         Property.SHELTER: [15, 20]}
+         Property.SHELTER: [15, 20],
+         Property.WATER: [15,20],
+         Property.SECURITY: [15, 20],
+         Property.COMPANY: [15, 20],
+         Property.WASTE_MANAGEMENT: [15, 20]}
 
 social_choice_prob = 0.1
 tmax = 50000
@@ -39,7 +54,7 @@ time_spent_f_if_f = []
 perc_time_f = []
 time_spent_s_if_s = []
 perc_time_s = []
-num_iters = 20
+num_iters = 1
 for i in range(num_iters):
     sim = TaskBiddingSimulator(n_agents=n_agents,
                             common_goods=common_goods,

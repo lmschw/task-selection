@@ -6,4 +6,6 @@ class Property(Enum):
     REST = "rest/exhaustion",
     WATER = "water",
     SECURITY = "security",
+    COMPANY = "company,",
+    WASTE_MANAGEMENT = "waste",
     FACE = "face"
